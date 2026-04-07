@@ -9,6 +9,10 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  PROJECT_PATH: anand-week5-assignment/7-april-assignment/WebApplication1/WebApplication1.csproj
+  PUBLISH_PATH: .\published
+
 jobs:
   build:
     runs-on: windows-latest
@@ -23,17 +27,20 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Restore
+        run: dotnet restore "${{ env.PROJECT_PATH }}"
+
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build "${{ env.PROJECT_PATH }}" --configuration Release --no-restore
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish "${{ env.PROJECT_PATH }}" -c Release -o "${{ env.PUBLISH_PATH }}" --no-build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{ env.PUBLISH_PATH }}
 
   deploy:
     runs-on: windows-latest
@@ -47,6 +54,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+          path: ${{ env.PUBLISH_PATH }}
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -61,5 +69,4 @@ jobs:
         with:
           app-name: 'web-app-at'
           slot-name: 'Production'
-          package: .
-          
+          package: ${{ env.PUBLISH_PATH }}

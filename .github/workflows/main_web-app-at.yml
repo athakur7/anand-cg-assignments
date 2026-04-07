@@ -46,7 +46,6 @@ jobs:
     runs-on: windows-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
 
     steps:
@@ -55,13 +54,6 @@ jobs:
         with:
           name: .net-app
           path: ${{ env.PUBLISH_PATH }}
-      
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3A22E9D2D1F7487A9409EB352187CD91 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5D5CC3E14AD5430F88AF4B54093DA6A6 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A71B60665C184F1481B7E42F613457E7 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -70,3 +62,5 @@ jobs:
           app-name: 'web-app-at'
           slot-name: 'Production'
           package: ${{ env.PUBLISH_PATH }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          project-path: anand-week5-assignment/7-april-assignment/WebApplication1/WebApplication1.csproj

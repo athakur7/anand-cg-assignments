@@ -60,8 +60,11 @@
 
         // GET - Load all products
         function loadProducts() {
+            console.log('API Base URL:', apiBaseUrl);
+            console.log('Full URL:', apiBaseUrl);
+
             $.ajax({
-                url: `${apiBaseUrl}/product`,
+                url: apiBaseUrl,
                 method: 'GET',
                 dataType: 'json',
                 success: function (data) {
@@ -76,10 +79,15 @@
                             </tr>`;
                     });
                     $('#products tbody').html(html);
+                    console.log('Products loaded successfully:', data);
                 },
                 error: function (xhr, status, error) {
-                    console.error('Error loading products:', error);
-                    alert('Failed to load products: ' + error);
+                    const errorMsg = xhr.responseText || error;
+                    console.error('Full Error Response:', xhr);
+                    console.error('Status:', xhr.status);
+                    console.error('Status Text:', xhr.statusText);
+                    console.error('Error:', error);
+                    alert(`Failed to load products:\nStatus: ${xhr.status}\nError: ${errorMsg}`);
                 }
             });
         }
@@ -96,7 +104,7 @@
             };
 
             $.ajax({
-                url: `${apiBaseUrl}/product`,
+                url: `${apiBaseUrl}/products`,
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(product),

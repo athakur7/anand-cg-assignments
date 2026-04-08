@@ -22,8 +22,17 @@ $failureCount = 0
 foreach ($projDir in $projsWithLibMan) {
     Write-Host "Restoring: $projDir" -ForegroundColor Yellow
     Push-Location $projDir
-    
-    dotnet libman restore 2>&1 | Out-Null
+
+    if (Get-Command libman -ErrorAction SilentlyContinue) {
+        libman restore 2>&1 | Out-Null
+    } elseif (Test-Path "$env:USERPROFILE\.dotnet\tools\libman.exe") {
+        & "$env:USERPROFILE\.dotnet\tools\libman.exe" restore 2>&1 | Out-Null
+    } else {
+        Write-Host "  [FAILED - libman not found]" -ForegroundColor Red
+        $failureCount++
+        Pop-Location
+        continue
+    }
     
     if ($LASTEXITCODE -eq 0) {
         Write-Host "  [OK]" -ForegroundColor Green

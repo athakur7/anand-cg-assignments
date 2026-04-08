@@ -1,26 +1,27 @@
 ﻿{
-    "defaultProvider":  "cdnjs",
+    "defaultProvider":  "unpkg",
     "libraries":  [
                       {
                           "library":  "bootstrap@5.3.0",
-                          "provider":  "cdnjs",
+                          "provider":  "unpkg",
                           "destination":  "wwwroot/lib/bootstrap"
                       },
                       {
                           "library":  "jquery@3.6.0",
-                          "provider":  "cdnjs",
+                          "provider":  "unpkg",
                           "destination":  "wwwroot/lib/jquery"
                       },
                       {
                           "library":  "jquery-validation@1.19.5",
-                          "provider":  "cdnjs",
+                          "provider":  "unpkg",
                           "destination":  "wwwroot/lib/jquery-validation"
                       },
                       {
                           "library":  "jquery-validation-unobtrusive@4.0.0",
-                          "provider":  "cdnjs",
+                          "provider":  "unpkg",
                           "destination":  "wwwroot/lib/jquery-validation-unobtrusive"
                       }
                   ],
     "version":  "1.0"
 }
+

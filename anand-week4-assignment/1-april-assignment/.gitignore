@@ -6,7 +6,7 @@ obj/
 *.dll
 *.exe
 
-wwwroot/lib/
+**/wwwroot/lib/
 node_modules/
 
 .env

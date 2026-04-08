@@ -94,7 +94,7 @@ MigrationBackup/
 
 # Client-side libraries (managed by LibMan or npm)
 # Run 'restore-libraries.ps1' after cloning to restore these
-wwwroot/lib/
+**/wwwroot/lib/
 node_modules/
 
 # VS Code files for those working on multiple tools

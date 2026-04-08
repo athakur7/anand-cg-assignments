@@ -268,3 +268,5 @@ FakesAssemblies/
 
 # JetBrains Rider
 *.sln.iml
+/anand-week5-assignment/8-april-assignment/ProductAPIClient/appsettings.json
+/anand-week5-assignment/8-april-assignment/ProductAPIClient/appsettings.Development.json

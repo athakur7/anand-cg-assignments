@@ -273,3 +273,17 @@ FakesAssemblies/
 anand-week5-assignment/8-april-assignment/day 63/WebApplication2/appsettings.json
 anand-week5-assignment/8-april-assignment/day 63/WebApplication2/publish/
 anand-week5-assignment/8-april-assignment/day 63/WebApplication2/appsettings.Development.json
+
+# Azure Functions
+**/local.settings.json
+
+# Azure publish profiles / service dependencies (can contain secrets)
+**/Properties/PublishProfiles/
+**/Properties/ServiceDependencies/
+**/Properties/serviceDependencies*.json
+
+# Codex local .NET CLI home
+.dotnet_cli_home/
+
+# Ignore VS publish artifacts for this assignment
+anand-week5-assignment/9-april-assignment/FunctionApp1/Properties/

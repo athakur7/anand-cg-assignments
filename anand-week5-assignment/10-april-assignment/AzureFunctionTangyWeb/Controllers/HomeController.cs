@@ -27,7 +27,8 @@ namespace AzureFunctionTangyWeb.Controllers
             salesRequest.Id = Guid.NewGuid().ToString();
 
             using var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri("http://localhost:7023/api/");
+            var functionBaseUrl = Environment.GetEnvironmentVariable("FunctionApiBaseUrl") ?? "http://localhost:7023/api/";
+            client.BaseAddress = new Uri(functionBaseUrl);
 
             using (var content = new StringContent(JsonConvert.SerializeObject(salesRequest), System.Text.Encoding.UTF8, "application/json"))
             {

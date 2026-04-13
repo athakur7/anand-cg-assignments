@@ -1,0 +1,73 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "triggers": {
+    "When_an_HTTP_request_is_received": {
+      "type": "Request",
+      "kind": "Http",
+      "inputs": {
+        "method": "POST",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "name": { "type": "string" },
+            "email": { "type": "string" },
+            "phone": { "type": "string" }
+          },
+          "required": ["id", "name", "email", "phone"]
+        }
+      }
+    }
+  },
+  "actions": {
+    "Insert_row_(V2)": {
+      "runAfter": {},
+      "type": "ApiConnection",
+      "inputs": {
+        "host": {
+          "connection": {
+            "name": "@parameters('$connections')['sql']['connectionId']"
+          }
+        },
+        "method": "post",
+        "body": {
+          "Id": "@{triggerBody()?['id']}",
+          "Name": "@{triggerBody()?['name']}",
+          "Email": "@{triggerBody()?['email']}",
+          "Phone": "@{triggerBody()?['phone']}"
+        },
+        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[SpookyRequests]'))}/items"
+      }
+    },
+    "Send_email_(Gmail)": {
+      "type": "ApiConnection",
+      "inputs": {
+        "host": {
+          "connection": {
+            "name": "@parameters('$connections')['gmail']['connectionId']"
+          }
+        },
+        "method": "post",
+        "path": "/v2/Mail",
+        "body": {
+          "To": "anandthakur178@gmail.com",
+          "Subject": "New DB Insert: @{triggerBody()?['name']} (@{triggerBody()?['id']})",
+          "Body": "A new row was inserted into dbo.SpookyRequests.<br/><br/>Id: @{triggerBody()?['id']}<br/>Name: @{triggerBody()?['name']}<br/>Email: @{triggerBody()?['email']}<br/>Phone: @{triggerBody()?['phone']}"
+        }
+      },
+      "runAfter": {
+        "Insert_row_(V2)": [
+          "Succeeded"
+        ]
+      }
+    }
+  },
+  "outputs": {},
+  "parameters": {
+    "$connections": {
+      "type": "Object",
+      "defaultValue": {}
+    }
+  }
+}

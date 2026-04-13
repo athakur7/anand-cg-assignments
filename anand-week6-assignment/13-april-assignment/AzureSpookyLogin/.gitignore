@@ -1,0 +1,28 @@
+# Build outputs
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Core / local settings
+appsettings.Local.json
+secrets.json
+
+# Temporary Azure workflow export / connection files
+workflow-*.json
+sql-connection-body.json
+sqlManagedApi.json
+latest-run.json
+latest-actions.json
+workflow-current.json
+workflow-put.json
+workflow-verify.json
+
+# Temporary files
+*.tmp
+*.log

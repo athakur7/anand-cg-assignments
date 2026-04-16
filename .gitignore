@@ -288,3 +288,6 @@ anand-week5-assignment/8-april-assignment/day 63/WebApplication2/appsettings.Dev
 # Ignore VS publish artifacts for this assignment
 anand-week5-assignment/9-april-assignment/FunctionApp1/Properties/
 /anand-week6-assignment/13-april-assignment/AzureSpookyLogin/appsettings.Development.json
+
+**/appsettings.json
+**/appsettings.Development.json

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="StudentInquiryAssistanceAPI.csproj" />
+  <Project Path="StudentInquiryAssistanceAPI.DbFirst\StudentInquiryAssistanceAPI.DbFirst.csproj" />
+</Solution>

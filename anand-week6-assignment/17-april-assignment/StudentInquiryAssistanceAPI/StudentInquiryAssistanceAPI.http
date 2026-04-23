@@ -1,0 +1,98 @@
+@StudentInquiryAssistanceAPI_HostAddress = http://localhost:8080
+@adminToken = paste-admin-token-here
+@studentToken = paste-student-token-here
+@staffToken = paste-staff-token-here
+
+### Admin Login
+POST {{StudentInquiryAssistanceAPI_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@niit.com",
+  "password": "Admin@123"
+}
+
+### Student Login
+POST {{StudentInquiryAssistanceAPI_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "student1@niit.com",
+  "password": "Stud123"
+}
+
+### Office Staff Login
+POST {{StudentInquiryAssistanceAPI_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "staff@niit.com",
+  "password": "Staff@123"
+}
+
+### View Courses
+GET {{StudentInquiryAssistanceAPI_HostAddress}}/api/course
+Accept: application/json
+
+### Create Course As Admin
+POST {{StudentInquiryAssistanceAPI_HostAddress}}/api/course
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "courseName": "Cloud Computing",
+  "description": "Cloud foundations, deployment models, and Azure services.",
+  "instructorName": "Cloud Trainer",
+  "duration": "3 Months",
+  "feesAmount": 28000
+}
+
+### Create Admission As Student
+POST {{StudentInquiryAssistanceAPI_HostAddress}}/api/admission
+Authorization: Bearer {{studentToken}}
+Content-Type: application/json
+
+{
+  "courseId": 1
+}
+
+### Create Enquiry As Student
+POST {{StudentInquiryAssistanceAPI_HostAddress}}/api/enquiry
+Authorization: Bearer {{studentToken}}
+Content-Type: application/json
+
+{
+  "courseId": 1,
+  "title": "Need course timing",
+  "description": "Please share weekday and weekend timing details.",
+  "enquiryType": "Course Timing"
+}
+
+### View My Enquiries As Student
+GET {{StudentInquiryAssistanceAPI_HostAddress}}/api/enquiry/my
+Authorization: Bearer {{studentToken}}
+
+### Update Enquiry Status As Office Staff
+PATCH {{StudentInquiryAssistanceAPI_HostAddress}}/api/enquiry/1/status
+Authorization: Bearer {{staffToken}}
+Content-Type: application/json
+
+{
+  "status": "Replied",
+  "responseMessage": "Classes are available in weekday and weekend batches."
+}
+
+### Make Payment As Student
+POST {{StudentInquiryAssistanceAPI_HostAddress}}/api/payment
+Authorization: Bearer {{studentToken}}
+Content-Type: application/json
+
+{
+  "admissionId": 1,
+  "amount": 10000,
+  "paymentMode": "UPI"
+}
+
+### View Payment History As Student
+GET {{StudentInquiryAssistanceAPI_HostAddress}}/api/payment/history/me
+Authorization: Bearer {{studentToken}}
